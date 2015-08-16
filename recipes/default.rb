@@ -18,8 +18,8 @@ if node["lol"]["vagrant"]
     action :create
   end
 
-  link '/vagrant' do
-    to        '/home/lol/lol'
+  link '/home/lol/lol' do
+    to        '/vagrant'
     link_type :symbolic
   end
 else
