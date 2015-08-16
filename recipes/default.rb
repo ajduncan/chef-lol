@@ -5,6 +5,7 @@
 # Copyright (C) 2015 Andy Duncan
 #
 
+include_recipe 'apt'
 include_recipe 'git'
 include_recipe 'user'
 
