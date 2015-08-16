@@ -5,35 +5,46 @@
 # Copyright (C) 2015 Andy Duncan
 #
 
-include_recipe 'apt'
 include_recipe 'git'
 include_recipe 'user'
 
 
-user 'lol' do
-  home        '/home/lol'
-  manage_home true
-  password    '$1$k4UUIYCK$qmYqvOjSupYT29YRNBum80'
-  action      :create
+# if using vagrant, use /vagrant, otherwise clone the git repo.
+if node["lol"]["vagrant"]
+  directory '/home/lol' do
+    owner 'vagrant'
+    group 'vagrant'
+    mode  '0755'
+    action :create
+  end
+
+  link '/vagrant' do
+    to        '/home/lol/lol'
+    link_type :symbolic
+  end
+else
+  user 'lol' do
+    home        '/home/lol'
+    manage_home true
+    password    '$1$k4UUIYCK$qmYqvOjSupYT29YRNBum80'
+    action      :create
+  end
+
+  directory '/home/lol/lol' do
+    owner 'lol'
+    group 'lol'
+    mode  '0755'
+    action :create
+  end
+
+  git '/home/lol/lol' do
+    repository 'https://github.com/ajduncan/lol.git'
+    reference  'master'
+    user       'lol'
+    group      'lol'
+    action     :sync
+  end
 end
-
-
-directory '/home/lol/lol' do
-  owner 'lol'
-  group 'lol'
-  mode  '0755'
-  action :create
-end
-
-
-git '/home/lol/lol' do
-  repository 'https://github.com/ajduncan/lol.git'
-  reference  'master'
-  user       'lol'
-  group      'lol'
-  action     :sync
-end
-
 
 db = node["lol"]["database"]
 

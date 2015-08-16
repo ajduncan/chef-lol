@@ -87,8 +87,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 end
     chef.json = JSON.parse(IO.read(json_file))
 
-    # should not be required...
     chef.run_list = [
+      'recipe[apt]',
       'recipe[chef-lol::default]'
     ]
   end

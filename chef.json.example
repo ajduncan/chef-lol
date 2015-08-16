@@ -6,8 +6,7 @@
       "postgres": "foobarbaz"
     }
   },
-  "run_list": [
-    "recipe[chef-lol::default]",
-    "recipe[apt-upgrade-once::default]"
-  ]
+  "apt": {
+    "compile_time_update": "true"
+  }
 }
