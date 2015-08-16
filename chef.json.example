@@ -1,0 +1,13 @@
+{
+  "lol": {
+  },
+  "postgresql": {
+    "password": {
+      "postgres": "foobarbaz"
+    }
+  },
+  "run_list": [
+    "recipe[chef-lol::default]",
+    "recipe[apt-upgrade-once::default]"
+  ]
+}
