@@ -8,14 +8,14 @@ Ubuntu Linux
 
 ## Usage
 
-### chef-lol::default
+### lol::default
 
-Include `chef-lol` in your node's `run_list`:
+Include `lol` in your node's `run_list`:
 
 ```json
 {
   "run_list": [
-    "recipe[chef-lol::default]"
+    "recipe[lol::default]"
   ]
 }
 ```

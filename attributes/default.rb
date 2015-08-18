@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: chef-lol
+# Cookbook Name:: lol
 # Attributes:: default
 #
 
