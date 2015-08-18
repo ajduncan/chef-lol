@@ -8,6 +8,6 @@ version          '0.1.0'
 
 supports "ubuntu", ">= 12.04"
 
-%w{ apt apt-upgrade-once git database postgresql sudo user rvm }.each do |cookbook|
+%w{ apt apt-upgrade-once git database postgresql sudo user }.each do |cookbook|
   depends cookbook
 end

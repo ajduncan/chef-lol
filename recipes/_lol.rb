@@ -9,6 +9,9 @@ include_recipe 'git'
 include_recipe 'user'
 
 
+ruby_version = node["lol"]["ruby"]["version"]
+postgres_uri = "postgresql://#{node["lol"]["database"]["username"]}:#{node["lol"]["database"]["password"]}@#{node["lol"]["database"]["host"]}/#{node["lol"]["database"]["name"]}"
+
 user 'lol' do
   home        '/home/lol'
   manage_home true
@@ -16,9 +19,6 @@ user 'lol' do
   password    '$1$k4UUIYCK$qmYqvOjSupYT29YRNBum80'
   action      :create
 end
-
-
-include_recipe 'rvm::user'
 
 
 directory '/home/lol/lol' do
@@ -38,11 +38,22 @@ git '/home/lol/lol' do
 end
 
 
-rvm_shell 'install lol dependencies' do
+include_recipe 'rbenv::user'
+
+
+rbenv_script "bundle install" do
+  rbenv_version ruby_version
   cwd '/home/lol/lol'
   user 'lol'
-  code <<-EOH
-    source /home/lol/.rvm/scripts/rvm
-    bundle install --path .bundle
-  EOH
+  group 'lol'
+  code %{bundle install}
+end
+
+
+rbenv_script "sequel migration" do
+  rbenv_version ruby_version
+  cwd '/home/lol/lol'
+  user 'lol'
+  group 'lol'
+  code %{sequel -m db/migrations postgresql_uri }
 end

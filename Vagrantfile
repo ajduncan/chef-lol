@@ -33,6 +33,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.environment = 'production'
     chef.run_list = [
       'recipe[apt]',
+      'recipe[ruby_build]',
+      'recipe[rbenv::vagrant]',
       'recipe[lol::default]'
     ]
   end

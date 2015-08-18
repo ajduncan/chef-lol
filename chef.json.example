@@ -9,15 +9,17 @@
   "apt": {
     "compile_time_update": "true"
   },
-  "rvm": {
+  "rbenv": {
     "user_installs": [{
       "user": "lol",
-      "rubies": ["2.1.2"],
-      "default_ruby": "2.1.2",
-      "global_gems": [
-        {"name": "bundler"},
-        {"name": "rake", "version": "10.4.2"}
-      ]
+      "rubies": ["2.2.2"],
+      "global": "2.2.2",
+      "gems": {
+        "2.2.2": [
+          {"name": "bundler"},
+          {"name": "rake", "version": "10.4.2", "options": "--force" }
+        ]
+      }
     }]
   }
 }

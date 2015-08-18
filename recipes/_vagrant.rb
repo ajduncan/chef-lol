@@ -5,7 +5,8 @@
 # Copyright (C) 2015 Andy Duncan
 #
 
-include_recipe 'rvm::vagrant'
+
+ruby_version = node["lol"]["ruby"]["version"]
 
 
 directory '/home/lol' do
@@ -15,18 +16,17 @@ directory '/home/lol' do
   action :create
 end
 
+
 link '/home/lol/lol' do
   to        '/vagrant'
   link_type :symbolic
 end
 
-bash 'install lol dependencies' do
+
+rbenv_script "bundle install" do
+  rbenv_version ruby_version
   cwd '/home/lol/lol'
   user 'vagrant'
-  code <<-EOH
-    source /etc/profile.d/rvm.sh
-    rvm use 2.1.2
-    gem install bundler
-    bundle install
-  EOH
+  group 'vagrant'
+  code %{bundle install}
 end

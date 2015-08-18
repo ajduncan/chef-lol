@@ -12,6 +12,7 @@ include_recipe "postgresql::server" if db["host"] == "localhost"
 
 # ensure the postgresql client is installed
 include_recipe "postgresql::client"
+include_recipe "postgresql::ruby"
 
 # ensure the postgresql_database resource available
 include_recipe "database::postgresql"
