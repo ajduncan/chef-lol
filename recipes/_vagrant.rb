@@ -6,15 +6,45 @@
 #
 
 
-directory '/home/lol' do
-  owner 'vagrant'
+include_recipe 'rbenv::user'
+
+ruby_version = node["lol"]["ruby"]["version"]
+db = node["lol"]["database"]
+postgresql_uri = "postgresql://#{db["username"]}:#{db["password"]}@#{db["host"]}/#{db["name"]}"
+ruby_lol = "/home/vagrant/.rbenv/versions/#{ruby_version}/bin/ruby"
+
+
+rbenv_script "bundle install" do
+  rbenv_version ruby_version
+  cwd '/vagrant'
+  user 'vagrant'
   group 'vagrant'
-  mode  '0755'
-  action :create
+  code %{bundle install}
 end
 
 
-link '/home/lol/lol' do
-  to        '/vagrant'
-  link_type :symbolic
+rbenv_script "sequel migration" do
+  rbenv_version ruby_version
+  cwd '/vagrant'
+  user 'vagrant'
+  group 'vagrant'
+  code "sequel -m db/migrations #{postgresql_uri}"
+end
+
+
+rbenv_script "rerun" do
+  rbenv_version ruby_version
+  cwd '/vagrant'
+  user 'vagrant'
+  group 'vagrant'
+  code %{gem install rerun}
+end
+
+
+rbenv_script "rerun" do
+  rbenv_version ruby_version
+  cwd '/vagrant'
+  user 'vagrant'
+  group 'vagrant'
+  code "rerun --background #{ruby_lol} lol.rb"
 end

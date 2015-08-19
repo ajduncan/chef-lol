@@ -8,6 +8,11 @@
 include_recipe 'git'
 include_recipe 'user'
 
+ruby_version = node["lol"]["ruby"]["version"]
+db = node["lol"]["database"]
+postgresql_uri = "postgresql://#{db["username"]}:#{db["password"]}@#{db["host"]}/#{db["name"]}"
+ruby_lol = "/home/lol/.rbenv/versions/#{ruby_version}/bin/ruby"
+
 
 user 'lol' do
   home        '/home/lol'
@@ -36,3 +41,21 @@ end
 
 
 include_recipe 'rbenv::user'
+
+
+rbenv_script "bundle install" do
+  rbenv_version ruby_version
+  cwd '/home/lol/lol'
+  user 'vagrant'
+  group 'vagrant'
+  code %{bundle install}
+end
+
+
+rbenv_script "sequel migration" do
+  rbenv_version ruby_version
+  cwd '/home/lol/lol'
+  user 'lol'
+  group 'lol'
+  code "sequel -m db/migrations #{postgresql_uri}"
+end
