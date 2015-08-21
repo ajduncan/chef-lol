@@ -7,8 +7,6 @@
 
 include_recipe 'lol::_postgres'
 
-ruby_version = node["lol"]["ruby"]["version"]
-
 
 # if using vagrant, use /vagrant, otherwise clone the git repo.
 if node.chef_environment == 'development'
@@ -17,8 +15,8 @@ if node.chef_environment == 'development'
   group = 'vagrant'
   app_home = '/vagrant'
   app_path = '/vagrant/lol.rb'
-  rerun = "/home/vagrant/.rbenv/versions/#{ruby_version}/bin/rerun "
-  ruby = "/home/vagrant/.rbenv/versions/#{ruby_version}/bin/ruby"
+  rerun = "/home/vagrant/.rbenv/versions/#{node["lol"]["ruby"]["version"]}/bin/rerun "
+  ruby = "/home/vagrant/.rbenv/versions/#{node["lol"]["ruby"]["version"]}/bin/ruby"
 else
   include_recipe 'lol::_lol'
   home = node["lol"]["home"]
