@@ -11,31 +11,31 @@ include_recipe 'user'
 ruby_version = node["lol"]["ruby"]["version"]
 db = node["lol"]["database"]
 postgresql_uri = "postgresql://#{db["username"]}:#{db["password"]}@#{db["host"]}/#{db["name"]}"
-ruby_lol = "/home/lol/.rbenv/versions/#{ruby_version}/bin/ruby"
+ruby_lol = "/home/#{node["lol"]["username"]}/.rbenv/versions/#{ruby_version}/bin/ruby"
 
 
-user 'lol' do
-  home        '/home/lol'
+user "#{node["lol"]["username"]}" do
+  home        "/home/#{node["lol"]["username"]}"
   manage_home true
   shell       '/bin/bash'
-  password    '$1$k4UUIYCK$qmYqvOjSupYT29YRNBum80'
+  password    node["lol"]["password"]
   action      :create
 end
 
 
-directory '/home/lol/lol' do
-  owner 'lol'
-  group 'lol'
+directory "/home/#{node["lol"]["username"]}" do
+  owner node["lol"]["username"]
+  group node["lol"]["group"]
   mode  '0755'
   action :create
 end
 
 
-git '/home/lol/lol' do
+git "/home/#{node["lol"]["username"]}/lol" do
   repository 'https://github.com/ajduncan/lol.git'
   reference  'master'
-  user       'lol'
-  group      'lol'
+  user       node["lol"]["username"]
+  group      node["lol"]["group"]
   action     :sync
 end
 
@@ -45,17 +45,17 @@ include_recipe 'rbenv::user'
 
 rbenv_script "bundle install" do
   rbenv_version ruby_version
-  cwd '/home/lol/lol'
-  user 'vagrant'
-  group 'vagrant'
+  cwd "/home/#{node["lol"]["username"]}/lol"
+  user node["lol"]["username"]
+  group node["lol"]["group"]
   code %{bundle install}
 end
 
 
 rbenv_script "sequel migration" do
   rbenv_version ruby_version
-  cwd '/home/lol/lol'
-  user 'lol'
-  group 'lol'
+  cwd "/home/#{node["lol"]["username"]}/lol"
+  user node["lol"]["username"]
+  group node["lol"]["group"]
   code "sequel -m db/migrations #{postgresql_uri}"
 end

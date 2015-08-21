@@ -30,13 +30,3 @@ rbenv_script "sequel migration" do
   group 'vagrant'
   code "sequel -m db/migrations #{postgresql_uri}"
 end
-
-
-# this won't work - put this into upstart, supervisor, etc.
-rbenv_script "rerun-run" do
-  rbenv_version ruby_version
-  cwd '/vagrant'
-  user 'vagrant'
-  group 'vagrant'
-  code "rerun --background #{ruby_lol} lol.rb"
-end
