@@ -47,7 +47,7 @@ template "/etc/init/lol.conf" do
 end
 
 
-template "/home/#{node["lol"]["username"]}/lol/.env" do
+template "/#{app_home}/.env" do
   source "env.erb"
   owner  node["lol"]["username"]
   group  node["lol"]["group"]
