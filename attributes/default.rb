@@ -3,7 +3,7 @@
 # Attributes:: default
 #
 
-default["lol"]["ruby"]["version"]       = "2.2.2"
+default["lol"]["ruby"]["version"]       = "2.2.3"
 default["lol"]["username"]              = "lol"
 default["lol"]["group"]                 = "lol"
 default["lol"]["password"]              = "$1$k4UUIYCK$qmYqvOjSupYT29YRNBum80"
