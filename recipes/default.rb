@@ -17,7 +17,7 @@ if node.chef_environment == 'development'
   group = 'vagrant'
   app_home = '/vagrant'
   app_path = '/vagrant/lol.rb'
-  rerun = "/home/vagrant/.rbenv/versions/#{ruby_version}/bin/rerun"
+  rerun = "/home/vagrant/.rbenv/versions/#{ruby_version}/bin/rerun "
   ruby = "/home/vagrant/.rbenv/versions/#{ruby_version}/bin/ruby"
 else
   include_recipe 'lol::_lol'
