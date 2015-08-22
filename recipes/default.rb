@@ -15,7 +15,7 @@ if node.chef_environment == 'development'
   group = 'vagrant'
   app_home = '/vagrant'
   app_path = '/vagrant/lol.rb'
-  rerun = "/home/vagrant/.rbenv/versions/#{node["lol"]["ruby"]["version"]}/lib/ruby/gems/2.2.0/bin/rerun --force-polling "
+  rerun = "/home/vagrant/.rbenv/bin/rbenv exec bundle exec rerun --force-polling "
   ruby = "/home/vagrant/.rbenv/versions/#{node["lol"]["ruby"]["version"]}/bin/ruby"
 else
   include_recipe 'lol::_lol'
