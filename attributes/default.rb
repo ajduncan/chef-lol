@@ -10,7 +10,7 @@ default["lol"]["password"]              = "$1$k4UUIYCK$qmYqvOjSupYT29YRNBum80"
 default["lol"]["home"]                  = "/home/#{default["lol"]["username"]}"
 default["lol"]["app_path"]              = "#{default["lol"]["home"]}/lol/lol.rb"
 default["lol"]["rerun"]                 = ""
-default["lol"]["ruby"]                  = "#{default["lol"]["home"]}/.rbenv/versions/#{default["lol"]["ruby"]["version"]}/bin/ruby"
+default["lol"]["ruby_path"]             = "#{default["lol"]["home"]}/.rbenv/versions/#{default["lol"]["ruby"]["version"]}/bin/ruby"
 
 default["lol"]["database"]["name"]      = "lol"
 default["lol"]["database"]["host"]      = "localhost"

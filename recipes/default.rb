@@ -24,7 +24,7 @@ else
   app_home = "#{home}/lol"
   app_path = node["lol"]["app_path"]
   rerun = node["lol"]["rerun"]
-  ruby = node["lol"]["ruby"]
+  ruby_path = node["lol"]["ruby_path"]
 end
 
 
